@@ -1,0 +1,28 @@
+from typing import Optional
+
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+    def getIntersectionNode1(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        node_set = set()
+        while headA:
+            node_set.add(headA)
+            headA = headA.next
+        
+        while headB:
+            if headB in node_set:
+                return headB
+            headB = headB.next
+
+        return None
+
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        curA, curB = headA, headB
+        while curA != curB:
+            curA = curA.next if curA else headB
+            curB = curB.next if curB else headA
+        return curA
