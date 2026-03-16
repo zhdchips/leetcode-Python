@@ -1,56 +1,58 @@
-from typing import List
-
-
 class Solution:
     def sortColors1(self, nums: List[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
-        zero_index = -1
-        for i in range(len(nums)):
+        n = len(nums)
+        zeroIndex = -1
+        for i in range(n):
             if nums[i] == 0:
-                nums[i], nums[zero_index + 1] = nums[zero_index + 1], nums[i]
-                zero_index += 1
-
-        one_index = zero_index
-        for i in range(zero_index + 1, len(nums)):
+                zeroIndex += 1
+                nums[zeroIndex], nums[i] = nums[i], nums[zeroIndex]
+        
+        oneIndex = zeroIndex
+        for i in range(oneIndex + 1, n):
             if nums[i] == 1:
-                nums[i], nums[one_index + 1] = nums[one_index + 1], nums[i]
-                one_index += 1
+                oneIndex += 1
+                nums[oneIndex], nums[i] = nums[i], nums[oneIndex]
+
 
     def sortColors2(self, nums: List[int]) -> None:
-        zero_next_index = 0
-        one_next_index = 0
-        for i in range(len(nums)):
+        n = len(nums)
+        zeroIndex = oneIndex = -1
+
+        for i in range(n):
             if nums[i] == 0:
-                nums[i], nums[zero_next_index] = nums[zero_next_index], nums[i]
-                if zero_next_index != one_next_index:
-                    nums[i], nums[one_next_index] = nums[one_next_index], nums[i]
-                zero_next_index += 1
-                one_next_index += 1
+                nums[zeroIndex + 1], nums[i] = nums[i], nums[zeroIndex + 1]
+                if oneIndex != zeroIndex:
+                    nums[oneIndex + 1], nums[i] = nums[i], nums[oneIndex + 1]
+
+                oneIndex += 1
+                zeroIndex += 1
             elif nums[i] == 1:
-                nums[i], nums[one_next_index] = nums[one_next_index], nums[i]
-                one_next_index += 1
-
+                nums[oneIndex + 1], nums[i] = nums[i], nums[oneIndex + 1]
+                oneIndex += 1
+    
     def sortColors(self, nums: List[int]) -> None:
-        zero_next_index = 0
-        two_last_index = len(nums) - 1
-        index = 0
-        while index <= two_last_index:
-            if nums[index] == 0:
-                nums[index], nums[zero_next_index] = nums[zero_next_index], nums[index]
-                zero_next_index += 1
-                index += 1
-            elif nums[index] == 2:
-                nums[index], nums[two_last_index] = nums[two_last_index], nums[index]
-                two_last_index -= 1
+        n = len(nums)
+        zeroIndex = -1
+        towIndex = n
+
+        i = 0
+        while i < towIndex:
+            if nums[i] == 0:
+                zeroIndex += 1
+                nums[zeroIndex], nums[i] = nums[i], nums[zeroIndex]
+                i += 1
+            elif nums[i] == 2:
+                towIndex -= 1
+                nums[towIndex], nums[i] = nums[i], nums[towIndex]
             else:
-                index += 1
+                i += 1
+        
 
 
 
-new_solution = Solution()
-arr = [2,0,2,1,1,0]
-print(arr)
-new_solution.sortColors(arr)
-print(arr)
+
+
+        
